@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html th:replace="layout/layout :: body" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Top 10 khách hàng VIP</h3>
+<table class="table">
+    <tr>
+        <th>Tên KH</th><th>Tổng tiền</th><th>Ngày đầu</th><th>Ngày cuối</th>
+    </tr>
+    <tr th:each="v : ${items}">
+        <td th:text="${v[0]}"></td>
+        <td th:text="${v[1]}"></td>
+        <td th:text="${v[2]}"></td>
+        <td th:text="${v[3]}"></td>
+    </tr>
+</table>
+</body>
+</html>

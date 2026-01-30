@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 class="mb-3">Quản lý đơn hàng</h3>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Mã đơn</th>
+        <th>Khách hàng</th>
+        <th>Ngày</th>
+        <th>Địa chỉ</th>
+        <th></th>
+    </tr>
+
+    <tr th:each="o : ${items}">
+        <td th:text="${o.id}"></td>
+        <td th:text="${o.account.username}"></td>
+        <td th:text="${o.createDate}"></td>
+        <td th:text="${o.address}"></td>
+        <td>
+            <a th:href="@{/admin/order/edit/{id}(id=${o.id})}"
+               class="btn btn-sm btn-primary">Edit</a>
+            <a th:href="@{/admin/order/delete/{id}(id=${o.id})}"
+               class="btn btn-sm btn-danger">Delete</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

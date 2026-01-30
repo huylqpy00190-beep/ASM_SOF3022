@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/account/edit-profile}" method="post"
+      class="col-md-5 mx-auto">
+
+    <h3 class="mb-3">Cập nhật thông tin</h3>
+
+    <input name="fullname"
+           th:value="${session.user.fullname}"
+           class="form-control mb-2"
+           placeholder="Họ tên">
+
+    <input name="email"
+           th:value="${session.user.email}"
+           class="form-control mb-2"
+           placeholder="Email">
+
+    <input name="photo"
+           th:value="${session.user.photo}"
+           class="form-control mb-3"
+           placeholder="Ảnh đại diện">
+
+    <button class="btn btn-success w-100">Lưu thay đổi</button>
+</form>
+
+</body>
+</html>

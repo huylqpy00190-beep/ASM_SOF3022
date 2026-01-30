@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html th:replace="layout/layout :: body" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Thống kê doanh thu</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Loại</th><th>Doanh thu</th><th>Số lượng</th>
+        <th>Max</th><th>Min</th><th>Avg</th>
+    </tr>
+    <tr th:each="r : ${items}">
+        <td th:text="${r[0]}"></td>
+        <td th:text="${r[1]}"></td>
+        <td th:text="${r[2]}"></td>
+        <td th:text="${r[3]}"></td>
+        <td th:text="${r[4]}"></td>
+        <td th:text="${r[5]}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

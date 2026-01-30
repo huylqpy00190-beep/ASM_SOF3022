@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="layout/layout :: body"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h3 class="mb-4">👤 Quản lý tài khoản</h3>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+    <tr>
+        <th>Username</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Admin</th>
+        <th>Kích hoạt</th>
+        <th>Thao tác</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="a : ${items}">
+        <td th:text="${a.username}"></td>
+        <td th:text="${a.fullname}"></td>
+        <td th:text="${a.email}"></td>
+        <td th:text="${a.admin ? 'Yes' : 'No'}"></td>
+        <td th:text="${a.activated ? 'Active' : 'Inactive'}"></td>
+        <td>
+            <a th:href="@{/admin/account/edit/{u}(u=${a.username})}"
+               class="btn btn-sm btn-primary">Edit</a>
+            <a th:href="@{/admin/account/delete/{u}(u=${a.username})}"
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('Xóa tài khoản?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html th:replace="layout/layout :: body" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Sản phẩm theo loại</h3>
+<div class="row">
+    <div class="col-md-3" th:each="p : ${items}">
+        <div class="card">
+            <img th:src="@{/images/{img}(img=${p.image})}">
+            <div class="card-body">
+                <h6 th:text="${p.name}"></h6>
+                <p th:text="${p.price}"></p>
+                <a th:href="@{/cart/add/{id}(id=${p.id})}" class="btn btn-success btn-sm">Thêm giỏ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

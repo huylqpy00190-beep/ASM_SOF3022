@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav th:fragment="header"
+     class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <!-- LOGO -->
+        <a class="navbar-brand fw-bold" th:href="@{/home/index}">
+            WEBANHANG
+        </a>
+
+        <!-- TOGGLE MOBILE -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- MENU -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home/index}">Trang chủ</a>
+                </li>
+                <!-- ADMIN -->
+                <li class="nav-item" th:if="${user != null and user.admin}">
+                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/account}">
+                        Tài khoản
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user != null and user.admin}">
+                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/category}">
+                        Loại hàng
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user != null and user.admin}">
+                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/order}">
+                        Đơn hàng
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user != null and user.admin}">
+                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/product}">
+                        Sản phẩm
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${user != null and user.admin}">
+                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/revenue}">
+                        Thống kê doanh thu
+                    </a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav ms-auto">
+
+                <!-- GIỎ HÀNG -->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cart/view}">
+                        🛒 Giỏ hàng
+                        <span class="badge bg-danger"
+                              th:text="${cart != null ? cart.count : 0}">
+                            0
+                        </span>
+                    </a>
+                </li>
+
+                <!-- CHƯA ĐĂNG NHẬP -->
+                <li class="nav-item" th:if="${user == null}">
+                    <a class="nav-link" th:href="@{/auth/login}">Đăng nhập</a>
+                </li>
+
+                <li class="nav-item" th:if="${user == null}">
+                    <a class="nav-link" th:href="@{/account/sign-up}">Đăng ký</a>
+                </li>
+
+                <!-- ĐÃ ĐĂNG NHẬP -->
+                <li class="nav-item dropdown" th:if="${user != null}">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        👤 <span th:text="${user.username}"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/account/edit-profile}">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/list}">Đơn hàng của tôi</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/my-product-list}">Sản phẩm đã mua</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" th:href="@{/auth/logout}">Đăng xuất</a></li>
+                    </ul>
+                </li>
+
+                <!-- ADMIN -->
+                <li class="nav-item" th:if="${user != null and user.admin}">
+                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/product}">
+                        ⚙ Quản trị
+                    </a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
+

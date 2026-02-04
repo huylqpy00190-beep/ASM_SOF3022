@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="content">
+<div class="card shadow mt-4">
+    <div class="card-header bg-dark text-white">
+        <h3 class="mb-0">📊 Thống kê doanh thu theo loại</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+            <tr>
+                <th>Loại hàng</th>
+                <th>Doanh thu</th>
+                <th>Số lượng bán</th>
+                <th>Giá lớn nhất</th>
+                <th>Giá nhỏ nhất</th>
+                <th>Giá trung bình</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${items}">
+                <td th:text="${r.category}"></td>
+
+                <td class="fw-bold text-primary"
+                    th:text="${#numbers.formatDecimal(r.totalRevenue, 1, 'POINT', 0, 'COMMA')} + ' đ'"></td>
+
+                <td th:text="${r.totalQuantity}"></td>
+
+                <td th:text="${#numbers.formatDecimal(r.maxPrice, 1, 'POINT', 0, 'COMMA')} + ' đ'"></td>
+                <td th:text="${#numbers.formatDecimal(r.minPrice, 1, 'POINT', 0, 'COMMA')} + ' đ'"></td>
+                <td th:text="${#numbers.formatDecimal(r.avgPrice, 1, 'POINT', 0, 'COMMA')} + ' đ'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

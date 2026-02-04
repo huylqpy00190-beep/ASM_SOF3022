@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content" class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <h3>👤 Quản lý tài khoản</h3>
+        <a th:href="@{/admin/account/add}" class="btn btn-success">+ Thêm người dùng</a>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>Username</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${page.content}">
+            <td th:text="${a.username}"></td>
+            <td th:text="${a.fullname}"></td>
+            <td th:text="${a.email}"></td>
+            <td>
+    <span th:class="${(a.admin ?: false) ? 'badge bg-danger' : 'badge bg-secondary'}"
+          th:text="${(a.admin ?: false) ? 'Admin' : 'User'}"></span>
+            </td>
+            <td>
+                <a th:href="@{|/admin/account/edit/${a.username}|}" class="btn btn-sm btn-primary">Edit</a>
+                <a th:href="@{|/admin/account/delete/${a.username}|}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Xóa tài khoản này?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation" th:if="${page.totalPages > 1}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+                <a class="page-link" th:href="@{|/admin/account/index?p=${page.number - 1}|}">Previous</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link" th:text="${page.number + 1 + ' / ' + page.totalPages}"></span>
+            </li>
+            <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+                <a class="page-link" th:href="@{|/admin/account/index?p=${page.number + 1}|}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

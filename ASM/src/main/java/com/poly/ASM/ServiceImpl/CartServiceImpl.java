@@ -55,13 +55,14 @@ public class CartServiceImpl implements CartService {
     @Override
     public int getCount() {
         return map.values().stream()
-                .mapToInt(CartItem::getQuantity).sum();
+                .mapToInt(CartItem::getQuantity) // Gọi qua getQuantity()
+                .sum();
     }
 
     @Override
     public double getAmount() {
         return map.values().stream()
-                .mapToDouble(i -> i.getQuantity() * i.getProduct().getPrice())
+                .mapToDouble(item -> item.getQuantity() * item.getProduct().getPrice()) // Gọi qua getProduct()
                 .sum();
     }
 }

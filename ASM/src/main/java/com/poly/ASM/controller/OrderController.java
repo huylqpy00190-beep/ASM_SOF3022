@@ -6,6 +6,7 @@ import com.poly.ASM.Service.OrderDetailService;
 import com.poly.ASM.Service.OrderService;
 import com.poly.ASM.entity.Order;
 import com.poly.ASM.entity.OrderDetail;
+import com.poly.ASM.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class OrderController {
 
     @GetMapping("/checkout")
     public String checkout(Model model) {
-        model.addAttribute("view", "check-out");
+        model.addAttribute("view", "order/checkout");
         return "layout/layout";
     }
     @PostMapping("/checkout")
@@ -46,9 +47,12 @@ public class OrderController {
         cartService.getItems().forEach(item -> {
             OrderDetail detail = new OrderDetail();
             detail.setOrder(order);
+
+            // LẤY TRỰC TIẾP TỪ ĐỐI TƯỢNG PRODUCT TRONG ITEM
             detail.setProduct(item.getProduct());
             detail.setPrice(item.getProduct().getPrice());
-            detail.setQuantity(item.getQuantity());
+            detail.setQuantity(item.getQuantity()); // Dùng getQuantity() khớp với CartItem mới
+
             orderDetailService.create(detail);
         });
 
@@ -81,7 +85,7 @@ public class OrderController {
         model.addAttribute("items",
                 orderDetailService.findProductsByUsername(
                         authService.getUser().getUsername()));
-        model.addAttribute("view", "order/my-product-list");
+        model.addAttribute("view",   "order/my-product-list");
         return "layout/layout";
     }
 }

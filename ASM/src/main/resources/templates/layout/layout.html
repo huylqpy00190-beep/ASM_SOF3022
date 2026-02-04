@@ -9,7 +9,7 @@
 <div th:replace="layout/header :: header"></div>
 
 <div class="container mt-4">
-    <div th:replace="${view}"></div>
+    <div th:replace="~{${view} :: content}"></div>
 </div>
 
 <div th:replace="layout/footer :: footer"></div>

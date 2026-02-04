@@ -39,5 +39,11 @@ public class CartController {
         cartService.clear();
         return "redirect:/cart/view";
     }
+
+    @RequestMapping("/update/{id}")
+    public String update(@PathVariable("id") Integer id, @RequestParam("qty") Integer qty) {
+        cartService.update(id, qty);
+        return "redirect:/cart/view";
+    }
 }
 

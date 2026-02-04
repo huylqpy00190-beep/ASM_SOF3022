@@ -2,103 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<nav th:fragment="header"
-     class="navbar navbar-expand-lg navbar-dark bg-dark">
-
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
 
-        <!-- LOGO -->
         <a class="navbar-brand fw-bold" th:href="@{/home/index}">
-            WEBANHANG
+            <i class="bi bi-shop"></i> WEBANHANG
         </a>
 
-        <!-- TOGGLE MOBILE -->
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- MENU -->
         <div class="collapse navbar-collapse" id="navbarNav">
-
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/home/index}">Trang chủ</a>
-                </li>
-                <!-- ADMIN -->
-                <li class="nav-item" th:if="${user != null and user.admin}">
-                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/account}">
-                        Tài khoản
+                    <a class="nav-link active" th:href="@{/home/index}">
+                        <i class="bi bi-house-door"></i> Trang chủ
                     </a>
                 </li>
-                <li class="nav-item" th:if="${user != null and user.admin}">
-                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/category}">
-                        Loại hàng
-                    </a>
-                </li>
-                <li class="nav-item" th:if="${user != null and user.admin}">
-                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/order}">
-                        Đơn hàng
-                    </a>
-                </li>
-                <li class="nav-item" th:if="${user != null and user.admin}">
-                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/product}">
-                        Sản phẩm
-                    </a>
-                </li>
-                <li class="nav-item" th:if="${user != null and user.admin}">
-                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/revenue}">
-                        Thống kê doanh thu
-                    </a>
-                </li>
-
             </ul>
 
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-center">
 
-                <!-- GIỎ HÀNG -->
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/cart/view}">
-                        🛒 Giỏ hàng
-                        <span class="badge bg-danger"
+                <li class="nav-item me-3">
+                    <a class="nav-link position-relative" th:href="@{/cart/view}">
+                        <i class="bi bi-cart3 ">🛒 Giỏ hàng</i>
+                        <span class="position-absolute top-0 start-100   badge rounded-pill bg-danger"
                               th:text="${cart != null ? cart.count : 0}">
                             0
                         </span>
                     </a>
                 </li>
 
-                <!-- CHƯA ĐĂNG NHẬP -->
-                <li class="nav-item" th:if="${user == null}">
-                    <a class="nav-link" th:href="@{/auth/login}">Đăng nhập</a>
-                </li>
+                <th:block th:if="${user == null}">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/auth/login}">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm ms-2" th:href="@{/account/sign-up}">Đăng ký</a>
+                    </li>
+                </th:block>
 
-                <li class="nav-item" th:if="${user == null}">
-                    <a class="nav-link" th:href="@{/account/sign-up}">Đăng ký</a>
-                </li>
-
-                <!-- ĐÃ ĐĂNG NHẬP -->
                 <li class="nav-item dropdown" th:if="${user != null}">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        👤 <span th:text="${user.username}"></span>
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" data-bs-toggle="dropdown">
+
+                        <span th:text="${user.fullname}">Tên người dùng</span>
                     </a>
 
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" th:href="@{/account/edit-profile}">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" th:href="@{/order/list}">Đơn hàng của tôi</a></li>
-                        <li><a class="dropdown-item" th:href="@{/order/my-product-list}">Sản phẩm đã mua</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                        <li><h6 class="dropdown-header">Tài khoản của tôi</h6></li>
+                        <li><a class="dropdown-item" th:href="@{/account/edit-profile}"><i class="bi bi-person"></i> Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/list}"><i class="bi bi-bag-check"></i> Đơn hàng đã đặt</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/my-product-list}"><i class="bi bi-box-seam"></i> Sản phẩm đã mua</a></li>
+
+                        <th:block th:if="${user.admin == true}">
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header text-danger">⚙️ QUẢN TRỊ VIÊN</h6></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/product/index}">Quản lý sản phẩm</a></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/category/index}">Quản lý loại hàng</a></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/account/index}">Quản lý tài khoản</a></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/order/index}">Quản lý đơn hàng</a></li>
+                            <li><a class="dropdown-item text-primary fw-bold" th:href="@{/admin/report/revenue}">Báo cáo doanh thu</a></li>
+                        </th:block>
+
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" th:href="@{/auth/logout}">Đăng xuất</a></li>
+                        <li><a class="dropdown-item text-danger" th:href="@{/auth/logout}"><i class="bi bi-box-arrow-right"></i> Đăng xuất</a></li>
                     </ul>
                 </li>
 
-                <!-- ADMIN -->
-                <li class="nav-item" th:if="${user != null and user.admin}">
-                    <a class="nav-link text-warning fw-bold" th:href="@{/admin/product}">
-                        ⚙ Quản trị
+                <li class="nav-item ms-lg-2" th:if="${user != null and user.admin == true}">
+                    <a class="nav-link text-warning fw-bold border border-warning rounded px-2" th:href="@{/admin/product/index}">
+                        ADMIN
                     </a>
                 </li>
-
 
             </ul>
         </div>
@@ -107,4 +85,3 @@
 
 </body>
 </html>
-

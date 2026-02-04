@@ -2,19 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<div>
+<div th:fragment="content">
     <h3 class="mb-4">🔥 Sản phẩm nổi bật</h3>
 
     <div class="row">
         <div class="col-md-3" th:each="p : ${items}">
             <div class="card mb-4 shadow-sm">
-                <img th:src="@{/images/{img}(img=${p.image})}"
-                     class="card-img-top" style="height:200px;object-fit:cover">
+                <img th:src="@{|/images/products/${p.image}|}"
+                     class="card-img-top"
+                     onerror="this.src='/images/no-image.png'"
+                     style="height: 200px; object-fit: cover;">
 
                 <div class="card-body">
                     <h6 th:text="${p.name}"></h6>
-                    <p class="text-danger fw-bold"
-                       th:text="${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')} + ' ₫'">
+                    <p class="card-text text-danger fw-bold"
+                       th:text="${#numbers.formatDecimal(p.price, 1, 'POINT', 0, 'COMMA')} + ' đ'">
                     </p>
                     <a th:href="@{/product/detail/{id}(id=${p.id})}"
                        class="btn btn-primary btn-sm w-100">

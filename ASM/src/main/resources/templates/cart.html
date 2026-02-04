@@ -1,53 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+
+<div th:fragment="content">
 <h3 class="mb-4">🛒 Giỏ hàng</h3>
 
-<table class="table table-bordered">
-    <thead class="table-dark">
-    <tr>
-        <th>Sản phẩm</th>
-        <th>Giá</th>
-        <th>Số lượng</th>
-        <th>Thành tiền</th>
-        <th></th>
-    </tr>
-    </thead>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Ảnh</th>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tổng</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cart.items}">
+            <td><img th:src="@{|/images/products/${item.product.image}|}" width="50"></td>
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'POINT', 0, 'COMMA')} + ' đ'"></td>
+            <td>
+                <form th:action="@{/cart/update/{id}(id=${item.product.id})}" method="post">
+                    <input type="number" name="qty" th:value="${item.quantity}" onchange="this.form.submit()" style="width: 60px;">
+                </form>
+            </td>
+            <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 1, 'POINT', 0, 'COMMA')} + ' đ'"></td>
+            <td>
+                <a th:href="@{/cart/remove/{id}(id=${item.product.id})}" class="btn btn-sm btn-danger">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-    <tbody>
-    <tr th:each="item : ${cart.items}">
-        <td th:text="${item.name}"></td>
-        <td th:text="${item.price}"></td>
-
-        <td>
-            <input type="number" min="1"
-                   th:value="${item.qty}"
-                   class="form-control">
-        </td>
-
-        <td th:text="${item.price * item.qty}"></td>
-
-        <td>
-            <a th:href="@{/cart/remove/{id}(id=${item.id})}"
-               class="btn btn-danger btn-sm">
-                X
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="text-end">
-    <h5>Tổng tiền:
-        <span class="text-danger fw-bold"
-              th:text="${cart.amount}"></span>
-    </h5>
-
-    <a th:href="@{/order/checkout}"
-       class="btn btn-success mt-2">
-        Thanh toán
-    </a>
+    <div class="text-end">
+        <h4>Tổng thanh toán:
+            <span class="text-danger" th:text="${#numbers.formatDecimal(cart.amount, 1, 'POINT', 0, 'COMMA')} + ' đ'"></span>
+        </h4>
+        <a th:href="@{/cart/clear}" class="btn btn-outline-danger">Xóa sạch giỏ hàng</a>
+        <a th:href="@{/order/checkout}" class="btn btn-success">Thanh toán</a>
+    </div>
 </div>
-
 </body>
 </html>

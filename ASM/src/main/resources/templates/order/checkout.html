@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="content">
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📦 Thông tin thanh toán</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/order/checkout}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ nhận hàng:</label>
+                            <textarea name="address" class="form-control" rows="3"
+                                      required placeholder="Vui lòng nhập địa chỉ chính xác để giao hàng..."></textarea>
+                        </div>
+                        <div class="alert alert-info">
+                            Tổng tiền cần thanh toán sẽ được tính dựa trên giỏ hàng của bạn.
+                        </div>
+                        <div class="text-end">
+                            <a th:href="@{/cart/view}" class="btn btn-secondary">Quay lại giỏ hàng</a>
+                            <button class="btn btn-primary px-5">Xác nhận đặt hàng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.poly.ASM.dao;
 
 import com.poly.ASM.entity.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,7 @@ public interface ProductRepository
 
     // 2. Sản phẩm mới nhất
     @Query("SELECT p FROM Product p ORDER BY p.createDate DESC")
-    List<Product> findLatest(Pageable pageable);
+    Page<Product> findAllOrderByDate(Pageable pageable);
 
     // 3. Sản phẩm bán chạy (dựa OrderDetail)
     @Query("""

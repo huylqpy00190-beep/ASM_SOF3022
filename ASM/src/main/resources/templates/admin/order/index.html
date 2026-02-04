@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body th:fragment="content">
 <h3 class="mb-3">Quản lý đơn hàng</h3>
 
 <table class="table table-bordered">
@@ -22,8 +22,6 @@
         <td th:text="${o.createDate}"></td>
         <td th:text="${o.address}"></td>
         <td>
-            <a th:href="@{/admin/order/edit/{id}(id=${o.id})}"
-               class="btn btn-sm btn-primary">Edit</a>
             <a th:href="@{/admin/order/delete/{id}(id=${o.id})}"
                class="btn btn-sm btn-danger">Delete</a>
         </td>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0" th:text="${product.id == null ? '➕ Thêm sản phẩm mới' : '📝 Chỉnh sửa sản phẩm'}"></h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/product/save}" method="post" enctype="multipart/form-data" th:object="${product}">
+                <input type="hidden" th:field="*{id}">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="mb-3">
+                            <img th:src="${product.image != null ? '/images/products/' + product.image : '/images/no-image.png'}"
+                                 class="img-thumbnail mb-2" id="preview"
+                                 style="height: 250px; width: 100%; object-fit: cover;">
+                            <input type="file" name="file" class="form-control" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                            <input type="hidden" th:field="*{image}">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên sản phẩm</label>
+                            <input th:field="*{name}" class="form-control" placeholder="Nhập tên sản phẩm..." required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Giá bán (VNĐ)</label>
+                                <input type="number" th:field="*{price}" class="form-control" step="any" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Loại hàng</label>
+                                <select th:field="*{category.id}" class="form-select">
+                                    <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Ngày tạo gần nhất</label>
+                                <input type="text"
+                                       th:value="${#dates.format(product.createDate, 'dd-MM-yyyy')}"
+                                       class="form-control bg-light"
+                                       readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Trạng thái</label>
+                                <div class="form-control border-0">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" th:field="*{available}" th:value="true">
+                                        <label class="form-check-label">Còn hàng</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" th:field="*{available}" th:value="false">
+                                        <label class="form-check-label">Hết hàng</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-end">
+                    <button class="btn btn-success px-4">Lưu sản phẩm</button>
+                    <a th:href="@{/admin/product/index}" class="btn btn-secondary px-4">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

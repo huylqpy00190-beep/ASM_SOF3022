@@ -12,16 +12,16 @@ import java.util.List;
 @Entity
 @Table(name = "Accounts")
 public class Account {
-
     @Id
     private String username;
-
     private String password;
     private String fullname;
     private String email;
     private String photo;
-    private Boolean activated;
-    private Boolean admin;
+
+    // Gán giá trị mặc định để tránh null khi lấy từ DB hoặc tạo mới
+    private Boolean activated = false;
+    private Boolean admin = false;
 
     @OneToMany(mappedBy = "account")
     private List<Order> orders;

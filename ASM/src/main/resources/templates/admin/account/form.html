@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content" class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0" th:text="${item.username == null ? 'Thêm tài khoản' : 'Cập nhật tài khoản'}"></h3>
+        </div>
+        <div class="card-body">
+            <form th:action="${item.username == null ? '/admin/account/create' : '/admin/account/update'}"
+                  method="post" th:object="${item}">
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Username</label>
+                        <input th:field="*{username}" class="form-control"
+                               th:readonly="${item.username != null}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" th:field="*{password}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Họ và tên</label>
+                        <input th:field="*{fullname}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" th:field="*{email}" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" th:field="*{admin}" th:checked="${item.admin ?: false}">
+                        <label class="form-check-label">Admin</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" th:field="*{activated}">
+                        <label class="form-check-label">Activated</label>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <button class="btn btn-success px-4" th:text="${item.username == null ? 'Thêm mới' : 'Cập nhật'}"></button>
+                    <a th:href="@{/admin/account/index}" class="btn btn-secondary px-4">Quay lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

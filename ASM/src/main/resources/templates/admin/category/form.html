@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 th:text="${item.id == null ? '➕ Thêm loại mới' : '📝 Chỉnh sửa loại'}"></h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/category/save}" method="post" th:object="${item}">
+                <div class="mb-3">
+                    <label class="form-label">Mã loại</label>
+                    <input th:field="*{id}" class="form-control" th:readonly="${item.id != null}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên loại</label>
+                    <input th:field="*{name}" class="form-control" required>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-success">Lưu lại</button>
+                    <a th:href="@{/admin/category/index}" class="btn btn-secondary">Quay lại danh sách</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

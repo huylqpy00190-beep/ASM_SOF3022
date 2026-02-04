@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "Orders")
-public class Order {
+public class    Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,4 +26,8 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     List<OrderDetail> orderDetails;
+    @PrePersist
+    public void prePersist() {
+        this.createDate = new Date(); // Luôn lấy giờ hệ thống khi tạo đơn hàng mới
+    }
 }

@@ -12,17 +12,11 @@ public class ReportAController {
 
     @Autowired
     ReportService reportService;
-
-    @RequestMapping("/revenue")
+    @RequestMapping("/revenue") // Giờ đây URL sẽ là /admin/revenue
     public String revenue(Model model) {
         model.addAttribute("items", reportService.revenueByCategory());
-        return "admin/revenue";
-    }
-
-    @RequestMapping("/vip")
-    public String vip(Model model) {
-        model.addAttribute("items", reportService.top10VipCustomers());
-        return "admin/vip";
+        model.addAttribute("view", "admin/report/revenue"); // Dùng biến view để đổ vào layout
+        return "layout/layout"; // Trả về layout khung
     }
 }
 

@@ -53,7 +53,7 @@ public class AuthController {
         }
 
         if (Boolean.TRUE.equals(user.getAdmin())) {
-            return "redirect:/admin/product";
+            return "redirect:/admin/product/index";
         }
 
         return "redirect:/home/index";

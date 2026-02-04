@@ -4,6 +4,8 @@ import com.poly.ASM.Service.AccountService;
 import com.poly.ASM.dao.AccountRepository;
 import com.poly.ASM.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +35,18 @@ public class AccountServiceImpl implements AccountService {
     public List<Account> findAll() {
         return accountRepo.findAll();
     }
+    @Override
+    public void delete(String username) {
+        accountRepo.deleteById(username);
+    }
+    @Override
+    public Account findByEmail(String email) {
+        return accountRepo.findByEmail(email); // Gọi từ Repository đã có của bạn
+    }
+    @Override
+    public Page<Account> findAll(Pageable pageable) {
+        return accountRepo.findAll(pageable);
+    }
 }
+
 

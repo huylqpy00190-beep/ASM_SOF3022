@@ -20,13 +20,23 @@ public class Product {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Createdate")
-    private Date createDate = new Date();
+    private Date createDate; // Không gán new Date() ở đây nữa
 
     private Boolean available;
 
     @ManyToOne
     @JoinColumn(name = "Categoryid")
     private Category category;
+
+    @PrePersist
+    public void prePersist() {
+        this.createDate = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.createDate = new Date();
+    }
 
     @OneToMany(mappedBy = "product")
     List<OrderDetail> orderDetails;

@@ -31,8 +31,14 @@ public class ProductController {
 
     @RequestMapping("/product/list-by-category/{id}")
     public String listByCategory(@PathVariable("id") String id, Model model) {
+        // Lấy sản phẩm theo loại
         model.addAttribute("items", productService.findByCategory(id));
-        model.addAttribute("view", "product-list");
+
+        // Cần truyền lại danh sách categories để Sidebar không bị trống
+        model.addAttribute("categories", categoryService.findAll());
+
+        // Sử dụng chung file home.html hoặc một file list riêng có sidebar
+        model.addAttribute("view", "home");
         return "layout/layout";
     }
 

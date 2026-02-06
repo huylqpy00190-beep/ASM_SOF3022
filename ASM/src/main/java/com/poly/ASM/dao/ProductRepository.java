@@ -38,6 +38,7 @@ public interface ProductRepository
     // 6. Tìm theo tên
     @Query("SELECT p FROM Product p WHERE p.name LIKE %?1%")
     List<Product> searchByName(String keyword);
+
 }
 
 
